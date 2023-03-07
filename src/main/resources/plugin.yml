@@ -1,0 +1,5 @@
+name: GummyMC
+version: '${project.version}'
+main: me.wizzo.gummymc.GummyMC
+authors: [ wizzo ]
+description: The main system of GummyMC
