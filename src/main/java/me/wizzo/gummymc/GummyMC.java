@@ -1,20 +1,22 @@
 package me.wizzo.gummymc;
 
+import me.wizzo.gummymc.database.HikariCPSettings;
+import me.wizzo.gummymc.files.ConfigFile;
+import me.wizzo.gummymc.files.DatabaseFile;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public final class GummyMC extends JavaPlugin {
 
     private final ConsoleCommandSender console = getServer().getConsoleSender();
-    private String prefix = "&dGummy&fMC ";
+    private String prefix;
+    private ConfigFile configFile;
+    private DatabaseFile databaseFile;
+    private HikariCPSettings hikariCPSettings;
+
     @Override
     public void onEnable() {
         createFolder();
@@ -23,7 +25,10 @@ public final class GummyMC extends JavaPlugin {
         files();
         databases();
 
+        prefix = configFile.get().getString("Prefix");
+
         try {
+            hikariCPSettings.initSource();
             console.sendMessage("");
             console.sendMessage(messageFormat(prefix + "Plugin online!"));
             console.sendMessage(messageFormat(prefix + "Created by wizzo <3!"));
@@ -38,6 +43,7 @@ public final class GummyMC extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        hikariCPSettings.close(hikariCPSettings.getSource());
         console.sendMessage("");
         console.sendMessage(messageFormat(prefix + "Plugin offline!"));
         console.sendMessage(messageFormat(prefix + "Created by wizzo <3!"));
@@ -55,19 +61,23 @@ public final class GummyMC extends JavaPlugin {
     }
 
     private void files() {
+        configFile = new ConfigFile(this);
+        configFile.setup(this, "config.yml");
 
+        databaseFile = new DatabaseFile(this);
+        databaseFile.setup(this, "database.yml");
     }
 
     private void databases() {
-
+        hikariCPSettings = new HikariCPSettings(this);
     }
 
     private void createFolder() {
         if (!getDataFolder().exists()) {
             boolean success = getDataFolder().mkdirs();
             if (!success) {
-                getPluginLoader().disablePlugin(this);
                 System.out.println(ChatColor.RED + "[GummyMC] ERRORE NEL CREARE LA CARTELLA, PLUGIN DISABILITATO");
+                getPluginLoader().disablePlugin(this);
             }
         }
     }
@@ -88,5 +98,11 @@ public final class GummyMC extends JavaPlugin {
     }
     public boolean isOnline(Player player) {
         return getServer().getOnlinePlayers().contains(player);
+    }
+    public String getConfig(String string) {
+        return messageFormat(configFile.get().getString(string));
+    }
+    public String getDbConfig(String string) {
+        return databaseFile.get().getString(string);
     }
 }
