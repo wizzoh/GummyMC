@@ -3,3 +3,14 @@ version: '${project.version}'
 main: me.wizzo.gummymc.GummyMC
 authors: [ wizzo ]
 description: The main system of GummyMC
+
+commands:
+  message:
+    description: send a private message to player
+    aliases:
+      - msg
+      - pmessage
+  reply:
+    description: use for response to a private message
+    aliases:
+      - r

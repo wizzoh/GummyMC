@@ -1,13 +1,23 @@
 package me.wizzo.gummymc;
 
-import me.wizzo.gummymc.database.HikariCPSettings;
+import me.wizzo.gummymc.commands.*;
+import me.wizzo.gummymc.commands.privateMessage.messageCommand;
+import me.wizzo.gummymc.commands.privateMessage.replyCommand;
+import me.wizzo.gummymc.database.*;
 import me.wizzo.gummymc.files.ConfigFile;
 import me.wizzo.gummymc.files.DatabaseFile;
+import me.wizzo.gummymc.listeners.AsyncChatListener;
+import me.wizzo.gummymc.listeners.JoinLeaveListener;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class GummyMC extends JavaPlugin {
 
@@ -16,6 +26,10 @@ public final class GummyMC extends JavaPlugin {
     private ConfigFile configFile;
     private DatabaseFile databaseFile;
     private HikariCPSettings hikariCPSettings;
+    private Creater dbCreater;
+    private Getter dbGetter;
+    private Setter dbSetter;
+    private final Map<String, String> lastMessageReceived = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -53,23 +67,29 @@ public final class GummyMC extends JavaPlugin {
 //---------------------------- PRIVATE -----------------------------//
 
     private void commands() {
-
+        getCommand("message").setExecutor(new messageCommand(this, "gummymc.command.message"));
+        getCommand("reply").setExecutor(new replyCommand(this, "gummymc.command.reply"));
     }
 
     private void listeners() {
-
+        PluginManager pm = Bukkit.getPluginManager();
+        pm.registerEvents(new JoinLeaveListener(this), this);
+        pm.registerEvents(new AsyncChatListener(), this);
     }
 
     private void files() {
-        configFile = new ConfigFile(this);
+        this.configFile = new ConfigFile(this);
         configFile.setup(this, "config.yml");
 
-        databaseFile = new DatabaseFile(this);
+        this.databaseFile = new DatabaseFile(this);
         databaseFile.setup(this, "database.yml");
     }
 
     private void databases() {
         hikariCPSettings = new HikariCPSettings(this);
+        this.dbCreater = new Creater(this);
+        this.dbGetter = new Getter(this);
+        this.dbSetter = new Setter(this);
     }
 
     private void createFolder() {
@@ -104,5 +124,21 @@ public final class GummyMC extends JavaPlugin {
     }
     public String getDbConfig(String string) {
         return databaseFile.get().getString(string);
+    }
+
+    public HikariCPSettings getHikariCPSettings() {
+        return hikariCPSettings;
+    }
+    public Creater getDbCreater() {
+        return dbCreater;
+    }
+    public Getter getDbGetter() {
+        return dbGetter;
+    }
+    public Setter getDbSetter() {
+        return dbSetter;
+    }
+    public Map<String, String> getLastMessageReceived() {
+        return lastMessageReceived;
     }
 }

@@ -63,7 +63,14 @@ public class ConfigFile {
         conf.set("Prefix", "&d&lGummy&f&lMC &r");
         conf.set("NoPerm", "&d&lGUMMY&f&lMC &7Comando sconosciuto.");
         //conf.set("Command-not-found", "{prefix}&7Utilizza &d/marry help");
-        conf.set("Player-not-found", "{prefix}&7Il player non è online!");
+        conf.set("Player-not-found", "{prefix}&7Player non trovato!");
         conf.set("Message-error", "{prefix}&cC'è un errore con il comando! Contatta un admin il prima possibile!");
+
+        conf.set("GummyMC.Command.Message.Usage", "{prefix}&7Utilizza il comando &o/message <Player> <Message>&7.");
+        conf.set("GummyMC.Command.Message.Receiver-format", "&d&l(&7Da {playerName}&d&l) &7{message}");
+        conf.set("GummyMC.Command.Message.Sender-format", "&d&l(&7A {playerName}&d&l) &7{message}");
+
+        conf.set("GummyMC.Command.Reply.Usage", "{prefix}&7Utilizza il comando &o/reply <Message>&7.");
+        conf.set("GummyMC.Command.Reply.NoReply", "{prefix}&7Non devi rispondere a nessuno.");
     }
 }
