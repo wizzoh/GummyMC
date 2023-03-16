@@ -35,8 +35,13 @@ public class messageCommand implements CommandExecutor {
 
         Player target = main.getServer().getPlayerExact(args[0]);
 
-        if (!main.isOnline(target)) {
+        if (main.isOffline(target)) {
             sender.sendMessage(main.getConfig("Player-not-found"));
+            return true;
+        }
+
+        if (sender.getName().equalsIgnoreCase(target.getName())) {
+            sender.sendMessage(main.getConfig("GummyMC.Command.Message.No-himself"));
             return true;
         }
 
@@ -50,8 +55,12 @@ public class messageCommand implements CommandExecutor {
                     .replace("{playerName}", target.getName())
                     .replace("{message}", message)
             );
-            main.getLastMessageReceived().put(target.getName(), sender.getName());
+
+            if (sender instanceof Player) {
+                main.getLastMessageReceived().put(target.getName(), sender.getName());
+            }
         } catch (Exception e) {
+            sender.sendMessage(main.getConfig("Message-error"));
             e.printStackTrace();
         }
 

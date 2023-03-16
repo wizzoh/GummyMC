@@ -14,3 +14,11 @@ commands:
     description: use for response to a private message
     aliases:
       - r
+  gm:
+    description: modify your gamemode
+    aliases:
+      - gamemode
+  vanish:
+    description: enable or disable vanish mode
+    aliases:
+      - v

@@ -41,7 +41,7 @@ public class replyCommand implements CommandExecutor {
         }
         Player target = main.getServer().getPlayerExact(targetName);
 
-        if (!main.isOnline(target)) {
+        if (main.isOffline(target)) {
             sender.sendMessage(main.getConfig("Player-not-found"));
             return true;
         }
@@ -58,6 +58,7 @@ public class replyCommand implements CommandExecutor {
             );
             main.getLastMessageReceived().put(target.getName(), sender.getName());
         } catch (Exception e) {
+            sender.sendMessage(main.getConfig("Message-error"));
             e.printStackTrace();
         }
 

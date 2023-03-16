@@ -1,6 +1,7 @@
 package me.wizzo.gummymc;
 
-import me.wizzo.gummymc.commands.*;
+import me.wizzo.gummymc.commands.others.gmCommand;
+import me.wizzo.gummymc.commands.others.vanishCommand;
 import me.wizzo.gummymc.commands.privateMessage.messageCommand;
 import me.wizzo.gummymc.commands.privateMessage.replyCommand;
 import me.wizzo.gummymc.database.*;
@@ -69,6 +70,8 @@ public final class GummyMC extends JavaPlugin {
     private void commands() {
         getCommand("message").setExecutor(new messageCommand(this, "gummymc.command.message"));
         getCommand("reply").setExecutor(new replyCommand(this, "gummymc.command.reply"));
+        getCommand("gm").setExecutor(new gmCommand(this, "gummymc.command.gm", "gummymc.command.gm.others"));
+        getCommand("vanish").setExecutor(new vanishCommand(this, "gummymc.command.vanish", "gummymc.command.vanish.others"));
     }
 
     private void listeners() {
@@ -116,8 +119,8 @@ public final class GummyMC extends JavaPlugin {
     public boolean havePerms(CommandSender sender, String perms) {
         return sender.hasPermission(perms) || sender.isOp();
     }
-    public boolean isOnline(Player player) {
-        return getServer().getOnlinePlayers().contains(player);
+    public boolean isOffline(Player player) {
+        return !getServer().getOnlinePlayers().contains(player);
     }
     public String getConfig(String string) {
         return messageFormat(configFile.get().getString(string));
