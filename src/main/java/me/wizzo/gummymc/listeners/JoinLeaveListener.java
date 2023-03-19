@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.Collection;
-
 public class JoinLeaveListener implements Listener {
 
     private final GummyMC main;
@@ -23,10 +21,6 @@ public class JoinLeaveListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            //ADDARE NEL COSO DELLA FLY
-        }
-
         if (!main.getDbGetter().alreadyIntoDatabase(player.getUniqueId())) {
             main.getDbCreater().createPlayer(player);
         }
@@ -37,11 +31,11 @@ public class JoinLeaveListener implements Listener {
             }
         }
 
-
         if (main.getServer().getOnlinePlayers().size() > 1) {
-            for (Player online: main.getServer().getOnlinePlayers()) {
+            for (Player ignored : main.getServer().getOnlinePlayers()) {
                 for (String a: main.getDbGetter().getPlayerVanishedList()) {
-                    player.hidePlayer(online);
+                    Player b = Bukkit.getPlayerExact(a);
+                    player.hidePlayer(b);
                 }
             }
         }
@@ -51,9 +45,10 @@ public class JoinLeaveListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        /*if (Coso della fly contiene il player) {
-            togli il player e gli metti setAllowFlight(false);
-            }
-         */
+        if (main.getFlyPlayers().contains(player.getUniqueId())) {
+            main.getFlyPlayers().remove(player.getUniqueId());
+            player.setFlying(false);
+        }
+        main.getLastMessageReceived().remove(player.getName());
     }
 }

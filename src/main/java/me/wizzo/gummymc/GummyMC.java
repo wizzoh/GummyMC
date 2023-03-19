@@ -1,9 +1,10 @@
 package me.wizzo.gummymc;
 
-import me.wizzo.gummymc.commands.others.gmCommand;
-import me.wizzo.gummymc.commands.others.vanishCommand;
+import me.wizzo.gummymc.commands.others.*;
 import me.wizzo.gummymc.commands.privateMessage.messageCommand;
 import me.wizzo.gummymc.commands.privateMessage.replyCommand;
+import me.wizzo.gummymc.commands.teleportCommands.tpAllCommand;
+import me.wizzo.gummymc.commands.teleportCommands.tpCommand;
 import me.wizzo.gummymc.database.*;
 import me.wizzo.gummymc.files.ConfigFile;
 import me.wizzo.gummymc.files.DatabaseFile;
@@ -17,8 +18,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public final class GummyMC extends JavaPlugin {
 
@@ -31,6 +34,7 @@ public final class GummyMC extends JavaPlugin {
     private Getter dbGetter;
     private Setter dbSetter;
     private final Map<String, String> lastMessageReceived = new HashMap<>();
+    private final ArrayList<UUID> flyPlayers = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -72,6 +76,11 @@ public final class GummyMC extends JavaPlugin {
         getCommand("reply").setExecutor(new replyCommand(this, "gummymc.command.reply"));
         getCommand("gm").setExecutor(new gmCommand(this, "gummymc.command.gm", "gummymc.command.gm.others"));
         getCommand("vanish").setExecutor(new vanishCommand(this, "gummymc.command.vanish", "gummymc.command.vanish.others"));
+        getCommand("fly").setExecutor(new flyCommand(this, "gummymc.command.fly", "gummymc.command.fly.others"));
+        getCommand("teleport").setExecutor(new tpCommand(this, "gummymc.command.teleport", "gummymc.command.teleport.others"));
+        getCommand("teleportall").setExecutor(new tpAllCommand(this, "gummymc.command.teleportall", "gummymc.command.teleportall.others"));
+        getCommand("invsee").setExecutor(new invseeCommand(this, "gummymc.command.invsee"));
+        getCommand("ping").setExecutor(new pingCommand(this, "gummymc.command.ping"));
     }
 
     private void listeners() {
@@ -143,5 +152,8 @@ public final class GummyMC extends JavaPlugin {
     }
     public Map<String, String> getLastMessageReceived() {
         return lastMessageReceived;
+    }
+    public ArrayList<UUID> getFlyPlayers() {
+        return flyPlayers;
     }
 }

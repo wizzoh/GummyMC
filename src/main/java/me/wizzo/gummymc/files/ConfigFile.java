@@ -80,7 +80,31 @@ public class ConfigFile {
         conf.set("GummyMC.Command.Gamemode.Success-other", "{prefix}&7Il player è ora in &e{gamemode} &7({playerName}).");
 
         conf.set("GummyMC.Command.Vanish.Usage", "{prefix}&7Utilizza il comando &o/vanish&7.");
-        conf.set("GummyMC.Command.Vanish.Success", "{prefix}&7Ora sei in &e{gamemode}&7.");
-        conf.set("GummyMC.Command.Vanish.Success-other", "{prefix}&7Il player è ora in &e{gamemode} &7({playerName}).");
+        conf.set("GummyMC.Command.Vanish.Enable", "{prefix}&7Vanish &aabilitata&7.");
+        conf.set("GummyMC.Command.Vanish.Disable", "{prefix}&7Vanish &cdisabilitata&7.");
+        conf.set("GummyMC.Command.Vanish.Enable-other", "{prefix}&7Vanish &aabilitata&7 per {playerName}.");
+        conf.set("GummyMC.Command.Vanish.Disable-other", "{prefix}&7Vanish &cdisabilitata&7 per {playerName}.");
+
+        conf.set("GummyMC.Command.Fly.Usage", "{prefix}&7Utilizza il comando &o/fly&7.");
+        conf.set("GummyMC.Command.Fly.Enable", "{prefix}&7Fly &aabilitata&7.");
+        conf.set("GummyMC.Command.Fly.Disable", "{prefix}&7Fly &cdisabilitata&7.");
+        conf.set("GummyMC.Command.Fly.Enable-other", "{prefix}&7Fly &aabilitata&7 per {playerName}.");
+        conf.set("GummyMC.Command.Fly.Disable-other", "{prefix}&7Fly &cdisabilitata&7 per {playerName}.");
+
+        conf.set("GummyMC.Command.Teleport.Usage", "{prefix}&7Utilizza il comando &o/tp <Player> [Target]&7.");
+        conf.set("GummyMC.Command.Teleport.No-himself", "{prefix}&7Non puoi teletrasportare il player da se stesso.");
+        conf.set("GummyMC.Command.Teleport.Success", "{prefix}&7Ti sei teletrasportato da &e{playerName}&7.");
+        conf.set("GummyMC.Command.Teleport.Success-other", "{prefix}&7Hai teletrasportato il player &e{playerName} &7da &e{targetName}&7.");
+
+        conf.set("GummyMC.Command.TpAll.Usage", "{prefix}&7Utilizza il comando &o/tpall [target]&7.");
+        conf.set("GummyMC.Command.TpAll.Success", "{prefix}&7Hai teletrasportato tutti i player da &e{playerName}&7.");
+
+        conf.set("GummyMC.Command.Invsee.Usage", "{prefix}&7Utilizza il comando &o/invsee <Player>&7.");
+        conf.set("GummyMC.Command.Invsee.No-himself", "{prefix}&7Bro se vuoi aprire il tuo inventario perchè usare questo comando?");
+        conf.set("GummyMC.Command.Invsee.Success", "{prefix}&7Hai aperto l'inventario di &e{playerName}&7.");
+
+        conf.set("GummyMC.Command.Ping.Usage", "{prefix}&7Utilizza il comando &o/ping [player]&7.");
+        conf.set("GummyMC.Command.Ping.Own", "{prefix}&7Il tuo ping è di &e{ping} &7ms.");
+        conf.set("GummyMC.Command.Ping.Others", "{prefix}&7Il ping di {playerName} è di &e{ping} &7ms");
     }
 }

@@ -3,6 +3,8 @@ version: '${project.version}'
 main: me.wizzo.gummymc.GummyMC
 authors: [ wizzo ]
 description: The main system of GummyMC
+softdepend:
+  - PlaceholderAPI
 
 commands:
   message:
@@ -22,3 +24,24 @@ commands:
     description: enable or disable vanish mode
     aliases:
       - v
+  fly:
+    description: enable or disable fly
+  teleport:
+    description: teleport you or a player on another player
+    aliases:
+      - tp
+  teleportall:
+    description: teleport all players online to you or antoher player
+    aliases:
+      - tpall
+  invsee:
+    description: open a player's inventory
+    aliases:
+      - seeinv
+      - seeinventory
+      - openinv
+  ping:
+    description: see your or another player's ping
+    aliases:
+      - latency
+      - ms
