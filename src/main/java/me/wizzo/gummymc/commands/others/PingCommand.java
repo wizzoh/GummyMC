@@ -7,17 +7,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class pingCommand implements CommandExecutor {
+public class PingCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms;
     private Method getHandleMethod;
     private Field pingField;
 
-    public pingCommand(GummyMC main, String perms) {
+    public PingCommand(GummyMC main, String perms) {
         this.main = main;
         this.perms = perms;
     }

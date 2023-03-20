@@ -7,17 +7,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class flyCommand implements CommandExecutor {
+public class VanishCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms, adminPerms;
 
-    public flyCommand(GummyMC main, String perms, String adminPerms) {
+    public VanishCommand(GummyMC main, String perms, String adminPerms) {
         this.main = main;
         this.perms = perms;
         this.adminPerms = adminPerms;
     }
-
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -28,7 +27,7 @@ public class flyCommand implements CommandExecutor {
         }
 
         if (args.length > 1) {
-            sender.sendMessage(main.getConfig("GummyMC.Command.Fly.Usage"));
+            sender.sendMessage(main.getConfig("GummyMC.Command.Vanish.Usage"));
             return true;
         }
 
@@ -44,7 +43,7 @@ public class flyCommand implements CommandExecutor {
             }
 
             try {
-                flyMethod(player);
+                vanishMethod(player);
             } catch (Exception e) {
                 player.sendMessage(main.getConfig("Message-error"));
                 e.printStackTrace();
@@ -64,17 +63,17 @@ public class flyCommand implements CommandExecutor {
         }
 
         try {
-            flyMethod(target);
-            if (main.getFlyPlayers().contains(target.getUniqueId())) {
-                sender.sendMessage(main.getConfig("GummyMC.Command.Fly.Enable-other")
+            vanishMethod(target);
+            if (main.getDbGetter().isVanished(target.getUniqueId())) {
+                sender.sendMessage(main.getConfig("GummyMC.Command.Vanish.Enable-other")
                         .replace("{playerName}", target.getName())
                 );
-                main.getConsole().sendMessage(ChatColor.RED + sender.getName() + " ha attivato la fly al player" + target.getName());
+                main.getConsole().sendMessage(ChatColor.RED + sender.getName() + " ha attivato la vanish al player" + target.getName());
             } else {
-                sender.sendMessage(main.getConfig("GummyMC.Command.Fly.Disable-other")
+                sender.sendMessage(main.getConfig("GummyMC.Command.Vanish.Disable-other")
                         .replace("{playerName}", target.getName())
                 );
-                main.getConsole().sendMessage(ChatColor.RED + sender.getName() + " ha disattivato la fly al player" + target.getName());
+                main.getConsole().sendMessage(ChatColor.RED + sender.getName() + " ha disattivato la vanish al player" + target.getName());
             }
         } catch (Exception e) {
             sender.sendMessage(main.getConfig("Message-error"));
@@ -83,17 +82,17 @@ public class flyCommand implements CommandExecutor {
         return true;
     }
 
-    private void flyMethod(Player player) {
-        if (main.getFlyPlayers().contains(player.getUniqueId())) {
-            main.getFlyPlayers().remove(player.getUniqueId());
-            player.setAllowFlight(false);
-            player.sendMessage(main.getConfig("GummyMC.Command.Fly.Disable"));
-            main.getConsole().sendMessage(ChatColor.RED + player.getName() + " ha disattivato la fly");
+    private void vanishMethod(Player player) {
+        if (main.getDbGetter().isNotIntoVanishTables(player.getUniqueId())) {
+            main.getDbCreater().createPlayerVanish(player);
+        }
+        main.getDbSetter().vanishOnOff(player.getUniqueId());
+        if (main.getDbGetter().isVanished(player.getUniqueId())) {
+            player.sendMessage(main.getConfig("GummyMC.Command.Vanish.Enable"));
+            main.getConsole().sendMessage(ChatColor.RED + player.getName() + " ha attivato la vanish");
         } else {
-            main.getFlyPlayers().add(player.getUniqueId());
-            player.setAllowFlight(true);
-            player.sendMessage(main.getConfig("GummyMC.Command.Fly.Enable"));
-            main.getConsole().sendMessage(ChatColor.RED + player.getName() + " ha attivato la fly");
+            player.sendMessage(main.getConfig("GummyMC.Command.Vanish.Disable"));
+            main.getConsole().sendMessage(ChatColor.RED + player.getName() + " ha disattivato la vanish");
         }
     }
 }

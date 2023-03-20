@@ -6,12 +6,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class tpAllCommand implements CommandExecutor {
+public class TpallCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms, adminPerms;
 
-    public tpAllCommand(GummyMC main, String perms, String adminPerms) {
+    public TpallCommand(GummyMC main, String perms, String adminPerms) {
         this.main = main;
         this.perms = perms;
         this.adminPerms = adminPerms;

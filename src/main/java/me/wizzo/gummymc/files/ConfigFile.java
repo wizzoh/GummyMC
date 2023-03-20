@@ -61,7 +61,7 @@ public class ConfigFile {
 
     private void defaultConfig() {
         conf.set("Prefix", "&d&lGummy&f&lMC &r");
-        conf.set("NoPerm", "&d&lGUMMY&f&lMC &7Comando sconosciuto.");
+        conf.set("NoPerm", "{prefix}&7Comando sconosciuto.");
         //conf.set("Command-not-found", "{prefix}&7Utilizza &d/marry help");
         conf.set("Player-not-found", "{prefix}&7Player non trovato!");
         conf.set("Command-only-player", "{prefix}&7Solo i player possono eseguire questo comando!");
@@ -106,5 +106,39 @@ public class ConfigFile {
         conf.set("GummyMC.Command.Ping.Usage", "{prefix}&7Utilizza il comando &o/ping [player]&7.");
         conf.set("GummyMC.Command.Ping.Own", "{prefix}&7Il tuo ping è di &e{ping} &7ms.");
         conf.set("GummyMC.Command.Ping.Others", "{prefix}&7Il ping di {playerName} è di &e{ping} &7ms");
+
+        conf.set("GummyMC.Command.Mention.Usage", "{prefix}&7Utilizza il comando &o/mention&7.");
+        conf.set("GummyMC.Command.Mention.Enable", "{prefix}&7Menzione &aabilitata&7! Da adesso i player potranno taggarti.");
+        conf.set("GummyMC.Command.Mention.Disable", "{prefix}&7Menzione &cdisabilitata&7! Da adesso i player non potranno più taggarti.");
+
+        conf.set("GummyMC.Command.God.Usage", "{prefix}&7Utilizza il comando &o/god&7.");
+        conf.set("GummyMC.Command.God.Enable", "{prefix}&7God mode &aabilitata&7.");
+        conf.set("GummyMC.Command.God.Disable", "{prefix}&7Gode mode &cdisabilitata&7.");
+
+        conf.set("GummyMC.Command.Warp.Usage", "{prefix}&7Utilizza il comando &o/warp <create|delete|list|tp>&7.");
+
+        conf.set("GummyMC.Command.Warp.Create.Usage", "{prefix}&7Utilizza il comando &o/warp create <warpName>&7.");
+        conf.set("GummyMC.Command.Warp.Create.Already-exist", "{prefix}&7Esiste già un warp con questo nome!");
+        conf.set("GummyMC.Command.Warp.Create.Success", "{prefix}&7Warp {warpName} &7creato con successo!");
+
+        conf.set("GummyMC.Command.Warp.Delete.Usage", "{prefix}&7Utilizza il comando &o/warp delete <warpName>&7.");
+        conf.set("GummyMC.Command.Warp.Delete.Not-exist", "{prefix}&7Non è stato trovato un warp con questo nome!");
+        conf.set("GummyMC.Command.Warp.Delete.Success", "{prefix}&7Il warp {warpName} &7è stato eliminato!");
+
+        conf.set("GummyMC.Command.Warp.Teleport.Usage", "{prefix}&7Utilizza il comando &o/warp teleport <warpName>&7.");
+        conf.set("GummyMC.Command.Warp.Teleport.Not-exist", "{prefix}&7Non è stato trovato un warp con questo nome!");
+        conf.set("GummyMC.Command.Warp.Teleport.Success", "{prefix}&7Ti sei teletrasportato al warp &e{warpName} &7(Membri: {warpAuthors}).");
+        conf.set("GummyMC.Command.Warp.Teleport.World-not-found", "{prefix}&7Il mondo in cui si trova il warp non esiste! (worldName: {worldName})");
+
+        conf.set("GummyMC.Command.Warp.List.Usage", "{prefix}&7Utilizza il comando &o/warp list &7oppure &o/warps&7.");
+        conf.set("GummyMC.Command.Warp.List.Not-exist", "{prefix}&7Impossibile trovare i warp perchè il file è vuoto!");
+        conf.set("GummyMC.Command.Warp.List.Success", "{prefix}&7Ecco a te la lista dei warps:");
+
+        conf.set("GummyMC.Event.Chat.Sostituzione-cuore.Enable", "true");
+        conf.set("GummyMC.Event.Chat.Sostituzione-cuore.Sostituire", "<3");
+        conf.set("GummyMC.Event.Chat.Sostituzione-cuore.Sostituto", "&c❤&r");
+
+        conf.set("GummyMC.Event.Chat.Menzione.Enable", "true");
+        conf.set("GummyMC.Event.Chat.Menzione.Format", "&d@{playerName}&r");
     }
 }

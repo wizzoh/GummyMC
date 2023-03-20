@@ -6,16 +6,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-public class tpCommand implements CommandExecutor {
+public class TpCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms, adminPerms;
 
-    public tpCommand(GummyMC main, String perms, String adminPerms) {
+    public TpCommand(GummyMC main, String perms, String adminPerms) {
         this.main = main;
         this.perms = perms;
         this.adminPerms = adminPerms;

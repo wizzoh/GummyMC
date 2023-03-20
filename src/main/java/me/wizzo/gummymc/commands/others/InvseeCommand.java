@@ -6,12 +6,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class invseeCommand implements CommandExecutor {
+public class InvseeCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms;
 
-    public invseeCommand(GummyMC main, String perms) {
+    public InvseeCommand(GummyMC main, String perms) {
         this.main = main;
         this.perms = perms;
     }
@@ -20,21 +20,21 @@ public class invseeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!main.havePerms(sender, perms)) {
-            sender.sendMessage(main.getConfig("NoPerm"));
-            return true;
-        }
-
-        if (args.length != 1) {
-            sender.sendMessage(main.getConfig("GummyMC.Command.Invsee.Usage"));
-            return true;
-        }
-
         if (!(sender instanceof Player)) {
             sender.sendMessage(main.getConfig("Command-only-player"));
             return true;
         }
         Player player = (Player) sender;
+
+        if (!main.havePerms(player, perms)) {
+            player.sendMessage(main.getConfig("NoPerm"));
+            return true;
+        }
+
+        if (args.length != 1) {
+            player.sendMessage(main.getConfig("GummyMC.Command.Invsee.Usage"));
+            return true;
+        }
         Player target = main.getServer().getPlayerExact(args[0]);
 
         if (main.isOffline(target)) {
@@ -43,7 +43,7 @@ public class invseeCommand implements CommandExecutor {
         }
 
         if (target.getName().equalsIgnoreCase(player.getName())) {
-            sender.sendMessage(main.getConfig("GummyMC.Command.Invsee.No-himself"));
+            player.sendMessage(main.getConfig("GummyMC.Command.Invsee.No-himself"));
             return true;
         }
 

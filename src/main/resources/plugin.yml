@@ -45,3 +45,20 @@ commands:
     aliases:
       - latency
       - ms
+  mention:
+    description: enable or disable your mentions
+    aliases:
+      - menzione
+  god:
+    description: enable or disable god mode
+    aliases:
+      - gesu
+      - dio
+  warp:
+    description: warp system command
+    aliases:
+      - home
+  warps:
+    description: alias for warp list command
+    aliases:
+      - homes

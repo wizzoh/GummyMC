@@ -2,7 +2,6 @@ package me.wizzo.gummymc.listeners;
 
 import me.wizzo.gummymc.GummyMC;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,8 +20,12 @@ public class JoinLeaveListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (!main.getDbGetter().alreadyIntoDatabase(player.getUniqueId())) {
-            main.getDbCreater().createPlayer(player);
+        if (main.getDbGetter().isNotIntoVanishTables(player.getUniqueId())) {
+            main.getDbCreater().createPlayerVanish(player);
+        }
+
+        if (main.getDbGetter().isNotIntoMentionTables(player.getUniqueId())) {
+            main.getDbCreater().createPlayerMention(player);
         }
 
         if (main.getDbGetter().isVanished(player.getUniqueId())) {
@@ -47,8 +50,10 @@ public class JoinLeaveListener implements Listener {
 
         if (main.getFlyPlayers().contains(player.getUniqueId())) {
             main.getFlyPlayers().remove(player.getUniqueId());
-            player.setFlying(false);
+            player.setAllowFlight(false);
         }
+
+        main.getGodPlayers().remove(player.getUniqueId());
         main.getLastMessageReceived().remove(player.getName());
     }
 }

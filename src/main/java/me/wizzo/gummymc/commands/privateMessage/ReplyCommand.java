@@ -6,15 +6,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class messageCommand implements CommandExecutor {
+public class ReplyCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms;
 
-    public messageCommand(GummyMC main, String perms) {
+    public ReplyCommand(GummyMC main, String perms) {
         this.main = main;
         this.perms = perms;
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!main.havePerms(sender, perms)) {
@@ -22,8 +23,8 @@ public class messageCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length < 2) {
-            sender.sendMessage(main.getConfig("GummyMC.Command.Message.Usage"));
+        if (args.length == 0) {
+            sender.sendMessage(main.getConfig("GummyMC.Command.Reply.Usage"));
             return true;
         }
 
@@ -33,15 +34,15 @@ public class messageCommand implements CommandExecutor {
         }
         String message = builder.toString();
 
-        Player target = main.getServer().getPlayerExact(args[0]);
+        String targetName = main.getLastMessageReceived().get(sender.getName());
+        if (targetName == null) {
+            sender.sendMessage(main.getConfig("GummyMC.Command.Reply.NoReply"));
+            return true;
+        }
+        Player target = main.getServer().getPlayerExact(targetName);
 
         if (main.isOffline(target)) {
             sender.sendMessage(main.getConfig("Player-not-found"));
-            return true;
-        }
-
-        if (sender.getName().equalsIgnoreCase(target.getName())) {
-            sender.sendMessage(main.getConfig("GummyMC.Command.Message.No-himself"));
             return true;
         }
 
@@ -55,10 +56,7 @@ public class messageCommand implements CommandExecutor {
                     .replace("{playerName}", target.getName())
                     .replace("{message}", message)
             );
-
-            if (sender instanceof Player) {
-                main.getLastMessageReceived().put(target.getName(), sender.getName());
-            }
+            main.getLastMessageReceived().put(target.getName(), sender.getName());
         } catch (Exception e) {
             sender.sendMessage(main.getConfig("Message-error"));
             e.printStackTrace();

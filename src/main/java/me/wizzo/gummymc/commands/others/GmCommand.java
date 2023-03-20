@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class gmCommand implements CommandExecutor {
+public class GmCommand implements CommandExecutor {
 
     private final GummyMC main;
     private final String perms, adminPerms;
     private final Map<UUID, String> gmPlayers = new HashMap<>();
 
-    public gmCommand(GummyMC main, String perms, String adminPerms) {
+    public GmCommand(GummyMC main, String perms, String adminPerms) {
         this.main = main;
         this.perms = perms;
         this.adminPerms = adminPerms;
