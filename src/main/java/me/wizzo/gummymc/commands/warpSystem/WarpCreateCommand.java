@@ -41,25 +41,25 @@ public class WarpCreateCommand implements CommandExecutor {
         }
         String warpName = main.messageFormat(args[0]);
         String warpNameFormatted = ChatColor.stripColor(warpName.toLowerCase());
-        String startedName = "Warps." + warpNameFormatted;
-
-        if (main.getWarpsConfig().get(startedName) != null) {
+        if (main.getDbGetter().warpExists(warpNameFormatted)) {
             player.sendMessage(main.getConfig("GummyMC.Command.Warp.Create.Already-exist"));
             return true;
         }
+
         Location location = player.getLocation();
 
         try {
-            main.getWarpsConfig().set(startedName + ".Name", warpName);
-            main.getWarpsConfig().set(startedName + ".World", location.getWorld().getName());
-            main.getWarpsConfig().set(startedName + ".X", location.getX());
-            main.getWarpsConfig().set(startedName + ".Y", location.getY());
-            main.getWarpsConfig().set(startedName + ".Z", location.getZ());
-            main.getWarpsConfig().set(startedName + ".Yaw", location.getYaw());
-            main.getWarpsConfig().set(startedName + ".Pitch", location.getPitch());
-            main.getWarpsConfig().set(startedName + ".Membri", player.getName());
-            main.saveWarpsConfig();
-
+            main.getDbSetter().createWarps(
+                    warpName,
+                    warpNameFormatted,
+                    location.getWorld().getName(),
+                    String.valueOf(location.getX()),
+                    String.valueOf(location.getY()),
+                    String.valueOf(location.getZ()),
+                    String.valueOf(location.getYaw()),
+                    String.valueOf(location.getPitch()),
+                    player.getName()
+            );
             player.sendMessage(main.getConfig("GummyMC.Command.Warp.Create.Success")
                     .replace("{warpName}", warpName)
             );

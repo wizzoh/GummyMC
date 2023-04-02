@@ -32,18 +32,15 @@ public class WarpDeleteCommand implements CommandExecutor {
             return true;
         }
         String warpNameFormatted = ChatColor.stripColor(args[0].toLowerCase());
-        String startedName = "Warps." + warpNameFormatted;
-        String warpName = main.getWarpsConfig().getString(startedName + ".Name");
+        String warpName = main.getDbGetter().getWarpName(warpNameFormatted);
 
-        if (main.getWarpsConfig().get(startedName) == null) {
+        if (!main.getDbGetter().warpExists(warpNameFormatted)) {
             sender.sendMessage(main.getConfig("GummyMC.Command.Warp.Delete.Not-exist"));
             return true;
         }
 
         try {
-            main.getWarpsConfig().set(startedName, null);
-            main.saveWarpsConfig();
-
+            main.getDbSetter().deleteWarps(warpNameFormatted);
             sender.sendMessage(main.getConfig("GummyMC.Command.Warp.Delete.Success")
                     .replace("{warpName}", warpName)
             );

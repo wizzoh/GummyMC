@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class HikariCPSettings {
 
-    public String className, url, host, port, database, username, password, vanishTable, mentionTable;
+    public String className, url, host, port, database, username, password, vanishTable, mentionTable, warpsListTable;
     private HikariDataSource dataSource;
     private final GummyMC main;
 
@@ -26,6 +26,7 @@ public class HikariCPSettings {
         this.password = main.getDbConfig("Password");
         this.vanishTable = main.getDbConfig("Table.Vanish");
         this.mentionTable = main.getDbConfig("Table.Mention");
+        this.warpsListTable = main.getDbConfig("Table.WarpsList");
         this.url = main.getDbConfig("Url")
                 .replace("{ip}", host)
                 .replace("{port}", port)

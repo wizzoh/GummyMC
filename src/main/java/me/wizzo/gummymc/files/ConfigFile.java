@@ -60,7 +60,7 @@ public class ConfigFile {
     }
 
     private void defaultConfig() {
-        conf.set("Prefix", "&d&lGummy&f&lMC &r");
+        conf.set("Prefix", "&d&lGUMMY&f&lMC &r");
         conf.set("NoPerm", "{prefix}&7Comando sconosciuto.");
         //conf.set("Command-not-found", "{prefix}&7Utilizza &d/marry help");
         conf.set("Player-not-found", "{prefix}&7Player non trovato!");
@@ -127,12 +127,16 @@ public class ConfigFile {
 
         conf.set("GummyMC.Command.Warp.Teleport.Usage", "{prefix}&7Utilizza il comando &o/warp teleport <warpName>&7.");
         conf.set("GummyMC.Command.Warp.Teleport.Not-exist", "{prefix}&7Non è stato trovato un warp con questo nome!");
-        conf.set("GummyMC.Command.Warp.Teleport.Success", "{prefix}&7Ti sei teletrasportato al warp &e{warpName} &7(Membri: {warpAuthors}).");
+        conf.set("GummyMC.Command.Warp.Teleport.Success", "{prefix}&7Ti sei teletrasportato al warp {warpName} &7(Membri: {warpAuthors}).");
         conf.set("GummyMC.Command.Warp.Teleport.World-not-found", "{prefix}&7Il mondo in cui si trova il warp non esiste! (worldName: {worldName})");
 
         conf.set("GummyMC.Command.Warp.List.Usage", "{prefix}&7Utilizza il comando &o/warp list &7oppure &o/warps&7.");
-        conf.set("GummyMC.Command.Warp.List.Not-exist", "{prefix}&7Impossibile trovare i warp perchè il file è vuoto!");
-        conf.set("GummyMC.Command.Warp.List.Success", "{prefix}&7Ecco a te la lista dei warps:");
+        /*conf.set("GummyMC.Command.Warp.List.Not-exist", "{prefix}&7Impossibile trovare i warp perchè il file è vuoto!");
+        conf.set("GummyMC.Command.Warp.List.Success", "{prefix}&7Ecco a te la lista dei warps:\n{warpsList}\n");*/
+
+        conf.set("GummyMC.Inventory.Warp.Personal-name", "&5Warps personali");
+        conf.set("GummyMC.Inventory.Warp.All-name", "&5Warps totali");
+        conf.set("GummyMC.Inventory.Warp.Others-name", "&5Warps di {playerName}");
 
         conf.set("GummyMC.Event.Chat.Sostituzione-cuore.Enable", "true");
         conf.set("GummyMC.Event.Chat.Sostituzione-cuore.Sostituire", "<3");

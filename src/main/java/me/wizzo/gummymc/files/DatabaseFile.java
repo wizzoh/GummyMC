@@ -70,5 +70,6 @@ public class DatabaseFile {
         conf.set("Max-pool-size", 10);
         conf.set("Table.Vanish", "vanished_staff");
         conf.set("Table.Mention", "players_mention");
+        conf.set("Table.WarpsList", "warpsList");
     }
 }

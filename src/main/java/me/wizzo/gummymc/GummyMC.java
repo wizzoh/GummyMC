@@ -10,15 +10,14 @@ import me.wizzo.gummymc.commands.warpSystem.WarpMainCommand;
 import me.wizzo.gummymc.database.*;
 import me.wizzo.gummymc.files.ConfigFile;
 import me.wizzo.gummymc.files.DatabaseFile;
-import me.wizzo.gummymc.files.WarpsFile;
 import me.wizzo.gummymc.listeners.AsyncChatListener;
 import me.wizzo.gummymc.listeners.DamageListener;
+import me.wizzo.gummymc.listeners.InventoryListener;
 import me.wizzo.gummymc.listeners.JoinLeaveListener;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +30,6 @@ public final class GummyMC extends JavaPlugin {
     private String prefix;
     private ConfigFile configFile;
     private DatabaseFile databaseFile;
-    private WarpsFile warpsFile;
     private HikariCPSettings hikariCPSettings;
     private Creater dbCreater;
     private Getter dbGetter;
@@ -39,6 +37,7 @@ public final class GummyMC extends JavaPlugin {
     private final Map<String, String> lastMessageReceived = new HashMap<>();
     private final List<UUID> flyPlayers = new ArrayList<>();
     private final List<UUID> godPlayers = new ArrayList<>();
+    private final List<String> warpsName = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -97,6 +96,7 @@ public final class GummyMC extends JavaPlugin {
         pm.registerEvents(new JoinLeaveListener(this), this);
         pm.registerEvents(new AsyncChatListener(this), this);
         pm.registerEvents(new DamageListener(this), this);
+        pm.registerEvents(new InventoryListener(this), this);
     }
 
     private void files() {
@@ -105,9 +105,6 @@ public final class GummyMC extends JavaPlugin {
 
         this.databaseFile = new DatabaseFile(this);
         databaseFile.setup(this, "database.yml");
-
-        this.warpsFile = new WarpsFile(this);
-        warpsFile.setup(this, "warps.yml");
     }
 
     private void databases() {
@@ -172,13 +169,7 @@ public final class GummyMC extends JavaPlugin {
     public List<UUID> getGodPlayers() {
         return godPlayers;
     }
-    public FileConfiguration getWarpsConfig() {
-        return warpsFile.get();
-    }
-    public void saveWarpsConfig() {
-        warpsFile.save();
-    }
-    public void reloadWarpsConfig() {
-        warpsFile.reload();
+    public List<String> getWarpsName() {
+        return warpsName;
     }
 }
