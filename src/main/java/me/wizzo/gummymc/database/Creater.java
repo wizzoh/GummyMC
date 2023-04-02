@@ -29,7 +29,7 @@ public class Creater {
                 "create table if not exists {table} (Name CHAR(100) not null, NameNoColor CHAR(100) not null primary key, World CHAR(50) not null, " +
                 "X CHAR(50) not null, Y CHAR(50) not null, Z CHAR(50) not null, Yaw CHAR(50) not null, Pitch CHAR(50) not null, " +
                 "Members LONGTEXT not null);"
-        ).replace("{table}", main.getHikariCPSettings().warpsListTable);
+        ).replace("{table}", main.getHikariCPSettings().warpsListTable + "_" + main.getServer().getServerName());
 
         try (Connection connection = main.getHikariCPSettings().getSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(query);

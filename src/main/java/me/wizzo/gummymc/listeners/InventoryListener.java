@@ -44,7 +44,6 @@ public class InventoryListener implements Listener {
             String itemNameFormatted = ChatColor.stripColor(clickedItem.toLowerCase());
 
             if (humanEntity instanceof Player) {
-                System.out.println("cliccato");
                 main.getDbGetter().warpTeleport((Player) humanEntity, itemNameFormatted);
             }
         }
