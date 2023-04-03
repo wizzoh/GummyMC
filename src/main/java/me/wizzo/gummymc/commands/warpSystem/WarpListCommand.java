@@ -74,6 +74,11 @@ public class WarpListCommand implements CommandExecutor {
 
         }
 
+        if (!main.havePerms(player, perms + ".admin") || !main.havePerms(player, globalPerms)) {
+            player.sendMessage(main.getConfig("NoPerm"));
+            return true;
+        }
+
         if (args[0].equalsIgnoreCase("all")) {
 
             try {
