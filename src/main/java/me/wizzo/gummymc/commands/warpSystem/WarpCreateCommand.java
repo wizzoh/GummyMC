@@ -35,19 +35,48 @@ public class WarpCreateCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length != 1) {
+        if (args.length > 2) {
             player.sendMessage(main.getConfig("GummyMC.Command.Warp.Create.Usage"));
             return true;
         }
+
         String warpName = main.messageFormat(args[0]);
         String warpNameFormatted = ChatColor.stripColor(warpName.toLowerCase());
         if (main.getDbGetter().warpExists(warpNameFormatted)) {
             player.sendMessage(main.getConfig("GummyMC.Command.Warp.Create.Already-exist"));
             return true;
         }
-
         Location location = player.getLocation();
 
+        if (args.length == 1) {
+            try {
+                main.getDbSetter().createWarps(
+                        warpName,
+                        warpNameFormatted,
+                        location.getWorld().getName(),
+                        String.valueOf(location.getX()),
+                        String.valueOf(location.getY()),
+                        String.valueOf(location.getZ()),
+                        String.valueOf(location.getYaw()),
+                        String.valueOf(location.getPitch()),
+                        player.getName()
+                );
+                player.sendMessage(main.getConfig("GummyMC.Command.Warp.Create.Success")
+                        .replace("{warpName}", warpName)
+                );
+            } catch (Exception e) {
+                player.sendMessage(main.getConfig("Message-error"));
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        if (!main.havePerms(player, perms + ".admin") || !main.havePerms(player, globalPerms)) {
+            player.sendMessage(main.getConfig("NoPerm"));
+            return true;
+        }
+
+        String target = args[1];
         try {
             main.getDbSetter().createWarps(
                     warpName,
@@ -58,7 +87,7 @@ public class WarpCreateCommand implements CommandExecutor {
                     String.valueOf(location.getZ()),
                     String.valueOf(location.getYaw()),
                     String.valueOf(location.getPitch()),
-                    player.getName()
+                    target
             );
             player.sendMessage(main.getConfig("GummyMC.Command.Warp.Create.Success")
                     .replace("{warpName}", warpName)

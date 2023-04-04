@@ -26,7 +26,7 @@ public class HikariCPSettings {
         this.password = main.getDbConfig("Password");
         this.vanishTable = main.getDbConfig("Table.Vanish");
         this.mentionTable = main.getDbConfig("Table.Mention");
-        this.warpsListTable = main.getDbConfig("Table.WarpsList")  + "_" + main.getServer().getServerName();
+        this.warpsListTable = main.getDbConfig("Table.WarpsList");
         this.url = main.getDbConfig("Url")
                 .replace("{ip}", host)
                 .replace("{port}", port)

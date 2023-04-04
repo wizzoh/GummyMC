@@ -39,6 +39,14 @@ public class WarpDeleteCommand implements CommandExecutor {
             return true;
         }
 
+        if (!main.getDbGetter().getWarpsMembers(warpNameFormatted).contains(sender.getName()) &&
+                !main.havePerms(sender, perms + ".admin") ||
+                !main.havePerms(sender, globalPerms))
+        {
+            sender.sendMessage(main.getConfig("NoPerm"));
+            return true;
+        }
+
         try {
             main.getDbSetter().deleteWarps(warpNameFormatted);
             sender.sendMessage(main.getConfig("GummyMC.Command.Warp.Delete.Success")
